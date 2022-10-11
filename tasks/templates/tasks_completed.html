@@ -6,7 +6,7 @@
     <div class="row">
         <div class="col-md-6 offset-md-3">
 
-            <h1 class="text-center display-3 py-5 border-secondary border-bottom">Tasks Pending</h1>
+            <h1 class="text-center display-3 py-5 border-secondary border-bottom">Tasks Completed</h1>
 
             <ul class="list_group transparentThree px-3">
                 {% for task in tasks %}
@@ -23,7 +23,7 @@
 
 
                         <p>{{task.description}}</p>
-                        <p>{{task.datacompleted|date:'M j Y:i'}}</p>
+                        <p>{{task.datacompleted|date:'M j H:i'}}</p>
                 </a>
             
                 {% endfor %}

@@ -3,9 +3,10 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.http import HttpResponse
-from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth import login, logout, authenticate, user_logged_in
 from django.db import IntegrityError
-from .forms import TaskForm
+from django.urls import reverse
+from .forms import TaskForm, UserForm
 from .models import Task
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
@@ -28,10 +29,17 @@ def signup(request):
             # Register user
             try:
                 user = User.objects.create_user(
-                    username=request.POST['username'], password=request.POST['password1'])
+                    username=request.POST['username'], password=request.POST['password1'], email=request.POST['email'])
+                user.first_name = request.POST['first name']
+                user.last_name = request.POST['last name']
                 user.save()
                 login(request, user)
                 return redirect('tasks')
+            except ValueError:
+                return render(request, 'signup.html', {
+                    'form': UserCreationForm,
+                    'error': 'Please fill the cells'
+                })
             except IntegrityError:
                 return render(request, 'signup.html', {
                     'form': UserCreationForm,
@@ -54,8 +62,8 @@ def tasks(request):
 def tasks_completed(request):
     tasks = Task.objects.filter(user=request.user, datacompleted__isnull=False).order_by('-datacompleted')
 
-    return render(request, 'tasks.html', {
-        'tasks': tasks
+    return render(request, 'tasks_completed.html', {
+        'tasks': tasks,
     })
 
 @login_required
@@ -131,3 +139,22 @@ def signin(request):
         else:
             login(request, user)
             return redirect('tasks')
+
+def profile(request, id):
+    user = get_object_or_404(User, pk=id)
+    user.last_login = timezone.now()
+    return render(request, 'profile.html', {'user':user})
+
+def profile_detail(request, id):
+    if request.method == 'GET':
+        userC = get_object_or_404(User, pk=id)
+        form = UserForm(instance=userC)
+        return render(request, 'profile_detail.html', {'user':userC, 'form':form})
+    else:
+        try:
+            userC = get_object_or_404(User, pk=id)
+            form = UserForm(request.POST, instance=userC)
+            form.save()
+            return redirect('profile', id=request.user.id)
+        except ValueError:
+            return render(request, 'profile_detail.html', {'user':userC, 'form':form, 'error':'Error updating your profile'})

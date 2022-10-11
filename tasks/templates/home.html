@@ -3,12 +3,21 @@
 {% block content %}
 
 <main class="container py-5">
-    <section class="card card-body">
-        <h1 class="display-1 text-center">Django App</h1>
+    <section class="card card-body transparentThree">
+        <h1 class="display-1 text-center">Task Manager</h1>
     
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellat ipsum illum perspiciatis quaerat dolore quod beatae, eius quas. Accusantium facilis dicta sed neque reprehenderit libero possimus nobis odio iusto tempora excepturi, doloremque reiciendis error consequuntur voluptate voluptates modi vero delectus, harum consequatur. Omnis ab odit neque recusandae hic. Culpa fuga modi a quidem eius quod laudantium in dolorum exercitationem error obcaecati similique quibusdam consequatur, quia dolore deserunt eum sint dolores odio. Nulla, expedita quod consectetur saepe similique repudiandae suscipit quidem voluptatum laboriosam iure voluptatibus debitis natus excepturi aspernatur atque magnam id ipsa. Error adipisci voluptates harum dolorem debitis consequatur esse.</p>
 
-        <div class="text-center">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates provident architecto rem quos in doloremque veritatis quibusdam delectus, assumenda cum quod recusandae! Illum, obcaecati laborum id adipisci nostrum doloribus odit. Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio labore odit tempora ad quaerat officiis fugit vero quos rem facere doloribus maiores dicta impedit blanditiis voluptatem, perferendis, qui, iste magni?
+        <br> <br>
+        <div class="fw-bold">Created by: Luigi Pircio</div>
+
+        {% if user.is_authenticated %}
+        <div class="text-center mt-3">
+            <a class="btn btn-dark" href="/logout/">Log Out</a>
+        </div>
+        {% else %}
+        <div class="text-center mt-3">
             <a class="btn btn-secondary" href="/signin/">
                 Sign In
             </a>
@@ -16,6 +25,7 @@
                 Sign Up
             </a>
         </div>
+        {% endif %}
     </section>
 </main>
 

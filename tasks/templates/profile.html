@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Profile</title>
+</head>
+<body>
+    {% block content %}
+
+    <main class="container">
+        <div class="col-md-6 offset-md-3">
+            <h1 class="text-center display-3 py-5">Your Profile</h1>
+            
+            <div class="list-group border p-5 transparentTwo">
+                <header class="d-flex justify-content-between">
+                    <h2 class="fw-bold">{{user.username}}</h2>
+                    <div class="d-block">
+                        <p>Last Login: {{user.last_login|date:'M j, Y'}}</p>
+                        <p>Created in: {{user.date_joined|date:'M j Y, H:i'}}</p>
+                    </div>
+                </header>
+                <p>Email: {{user.email}}</p>
+                <p>First Name: {{user.first_name}}</p>
+                <p>Last Name: {{user.last_name}}</p>
+                <div class="text-center">
+                    <a class="btn btn-outline-dark align-items-center" href="{% url 'profile_detail' user.id %}">Edit Profile</a>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    {% endblock %}
+</body>
+</html>

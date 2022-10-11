@@ -5,14 +5,10 @@
 <main class="container">
     <div class="row">
         <section class="col-md-4 offset-md-4 mt-5">
-            <form action="/signin/" method="POST" class="card card-body">
+            <form action="/signin/" method="POST" class="card card-body transparentTwo">
                 <h1 class="text-center">Sign in</h1>
-                
-                {{error}}
-            
-                {% csrf_token %}
                             
-                {{error}}
+                <div>{{error}} {% if error %} <span class="bi bi-exclamation-diamond-fill"></span>{% endif %}</div>
                 {% csrf_token %}
             
                 <div class="mb-3">
